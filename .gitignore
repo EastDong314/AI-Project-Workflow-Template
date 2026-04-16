@@ -1,0 +1,10 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+
+# Local validation scratch
+tmp/
+scratch/
+
+# PowerShell transcript or temporary outputs
+*.log
