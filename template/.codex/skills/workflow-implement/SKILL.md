@@ -1,0 +1,128 @@
+---
+name: workflow-implement
+description: Execute implementation work from the current .ai-workflow files in a project that uses the Codex to pi workflow. Use when the user wants the agent to start implementing without retyping the full workflow prompt.
+---
+
+# Workflow Implement
+
+Use this skill to turn the current `.ai-workflow` state into implementation work.
+
+## Read First
+
+Read these files before making any code changes:
+
+- `.ai-workflow/GOAL.md`
+- `.ai-workflow/PLAN.md`
+- `.ai-workflow/ACCEPTANCE.md`
+- `.ai-workflow/REVIEW.md`
+- `.pi/SYSTEM.md`
+
+Treat `.ai-workflow` as current-task overwrite mode. These files describe the active task, not long-term task history.
+
+## Working Rules
+
+- Implement the approved plan unless it is clearly blocked.
+- Before editing, make sure you can restate the task background, the reason the change exists, the active scope, the non-goals, and the acceptance target.
+- Do not optimize for the smallest possible diff. Inside the approved scope, prefer sound design, robustness, maintainability, and reasonable extensibility.
+- Prefer simple, direct solutions over speculative abstractions. Do not add extension points, indirection layers, or configuration surfaces unless the current task or repository patterns clearly require them.
+- Fix blocking findings from `.ai-workflow/REVIEW.md` before considering the task complete.
+- Avoid unrelated edits, but do not avoid necessary in-scope refactoring when it materially improves code quality.
+- If the plan conflicts with the codebase, environment, tests, or runtime reality, stop and document the blocker in `.ai-workflow/IMPLEMENTATION_LOG.md` instead of silently redesigning the task.
+- Do not silently assume missing behavior. If required information is absent, record the assumption or blocker before continuing.
+- For bug fixes, reproduce the failure with a test or concrete evidence first whenever feasible. If not feasible, explain why and add the strongest regression coverage you can.
+- Run meaningful validation. Prefer targeted tests first, then broader validation as needed by the scope.
+- Do not commit unless the user explicitly asks.
+
+## Start Response
+
+Before editing, briefly summarize in Chinese using exactly these top-level sections:
+
+```md
+## 工作流结果
+- 技能: `workflow-implement`
+- 状态: `in_progress`
+- 产物: `IMPLEMENTATION_LOG.md`
+
+## 实施摘要
+- 当前目标: ...
+- 修改背景: ...
+- 修改原因: ...
+- 本轮范围: ...
+- Review 阻塞项: ...
+- 首个动作: ...
+
+## 下一步
+- 开始实现并更新 `IMPLEMENTATION_LOG.md`
+```
+
+Then begin implementation.
+
+## Required Log Update
+
+When you finish a meaningful implementation pass, update `.ai-workflow/IMPLEMENTATION_LOG.md` with:
+
+- status
+- plan items addressed
+- files changed
+- key design decisions and why they were chosen
+- validations run
+- results
+- deviations, blockers, or follow-up notes
+
+Use this file shape:
+
+```md
+# Implementation Log
+
+## Status
+- `in_progress` | `blocked` | `ready_for_review` | `done`
+
+## Goal Recap
+- ...
+
+## Background And Reason Consumed
+- ...
+
+## Plan Items Addressed
+- ...
+
+## Changes Made
+- ...
+
+## Key Design Decisions
+- Decision:
+  Why:
+
+## Validation
+- Command:
+  Result:
+
+## Deviations From Plan
+- None / ...
+
+## Blockers
+- None / ...
+
+## Next Suggested Review Focus
+- ...
+```
+
+## Final response format
+
+When stopping after an implementation pass, respond in Chinese with exactly these top-level sections:
+
+```md
+## 工作流结果
+- 技能: `workflow-implement`
+- 状态: `blocked` | `ready_for_review` | `done`
+- 产物: `IMPLEMENTATION_LOG.md`
+
+## 实施摘要
+- 当前目标: ...
+- 修改原因: ...
+- 已完成: ...
+- 验证: ...
+
+## 下一步
+- ...
+```

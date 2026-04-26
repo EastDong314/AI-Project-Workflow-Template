@@ -30,6 +30,15 @@ Document:
 - testing expectations
 - documentation update requirements
 
+Recommended defaults:
+
+- prefer simple, direct designs over speculative abstraction
+- code must be robust under expected edge cases in scope
+- changes should be elegant through clarity, not cleverness
+- extensibility should be added only when justified by the current task
+- changed behavior should be covered by targeted tests and regression checks
+- local run, build, and deploy assumptions must remain documented and reproducible
+
 ## Review Gate
 
 Review should check:
@@ -39,6 +48,8 @@ Review should check:
 - validation quality
 - documentation sync
 - architecture rule compliance
+- unnecessary abstraction or overengineering
+- deployment and operational safety
 
 ## Current Stage
 

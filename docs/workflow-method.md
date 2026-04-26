@@ -8,6 +8,7 @@ Default split:
 
 - `Codex`
   - clarify the task
+  - write or update goal
   - write or update plan
   - write or update acceptance criteria
   - perform review
@@ -47,6 +48,14 @@ Codex creates:
 - `.ai-workflow/PLAN.md`
 - `.ai-workflow/ACCEPTANCE.md`
 
+Planning must capture:
+
+- task background
+- why the change exists
+- scope and non-goals
+- assumptions
+- execution steps with reasons and verification expectations
+
 ### 2. Implementation
 
 pi:
@@ -55,6 +64,13 @@ pi:
 - implements the change
 - runs validation
 - updates `.ai-workflow/IMPLEMENTATION_LOG.md`
+
+Implementation should:
+
+- prefer simple, direct solutions over speculative abstraction
+- stay within the approved scope unless a blocker is documented
+- record key design decisions and why they were made
+- record actual validation evidence, not claims
 
 ### 3. Review
 
@@ -69,6 +85,13 @@ Codex reviews:
 Codex then writes:
 
 - `.ai-workflow/REVIEW.md`
+
+Review must include:
+
+- the background and reason for the change
+- blocking findings with why they matter
+- missing validation or acceptance gaps
+- attention to overengineering, scope drift, and deployability risk
 
 ### 4. Fix cycle
 
@@ -86,6 +109,7 @@ This method is robust because:
 - implementation and review are separated
 - context survives session changes
 - project rules are local to the repository
+- weaker implementation models do not need to reconstruct intent from sparse prompts
 
 ## Compatibility Rules
 
@@ -94,6 +118,12 @@ This method is robust because:
 Keep project skills in:
 
 - `.codex/skills/`
+
+Recommended workflow skills:
+
+- `workflow-plan-acceptance`
+- `workflow-implement`
+- `workflow-review-md`
 
 ### pi compatibility
 

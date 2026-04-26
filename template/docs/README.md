@@ -11,6 +11,7 @@ Recommended initial docs:
 - testing strategy
 - naming conventions
 - decision records in `docs/adr/`
+- workflow expectations and validation norms if they differ from the template defaults
 
 Rule:
 

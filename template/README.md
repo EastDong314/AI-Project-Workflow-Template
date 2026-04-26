@@ -16,3 +16,4 @@ Document the smallest local bootstrap path here.
 - `docs/README.md`
 - `AGENTS.md`
 - `.ai-workflow/*`
+- `.codex/skills/*`

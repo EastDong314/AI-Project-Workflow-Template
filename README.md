@@ -7,6 +7,7 @@ Reusable project initialization template for AI-assisted development with:
 - `.ai-workflow` task artifacts
 - project-level `.pi` implementation-agent behavior
 - local `.codex/skills` convention plus `pi` discovery compatibility
+- repo-portable workflow skills for `plan`, `implement`, and `review`
 
 This template was extracted from a working setup used in `SignalReactor` and generalized for reuse across new repositories.
 
@@ -38,6 +39,12 @@ Split responsibilities clearly:
 
 Project state should be carried by files, not just by chat history.
 
+The workflow also assumes three portable skills with a fixed summary format:
+
+- `workflow-plan-acceptance`
+- `workflow-implement`
+- `workflow-review-md`
+
 ## Template Contents
 
 Inside `template/`:
@@ -50,6 +57,9 @@ Inside `template/`:
 - `.ai-workflow/IMPLEMENTATION_LOG.md`
 - `.ai-workflow/REVIEW.md`
 - `.codex/skills/README.md`
+- `.codex/skills/workflow-plan-acceptance/SKILL.md`
+- `.codex/skills/workflow-implement/SKILL.md`
+- `.codex/skills/workflow-review-md/SKILL.md`
 - `.agents/README.md`
 - `docs/README.md`
 - `docs/adr/README.md`
@@ -94,9 +104,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\link-codex-skills.ps1 -Projec
    - `.ai-workflow/GOAL.md`
    - `.ai-workflow/PLAN.md`
    - `.ai-workflow/ACCEPTANCE.md`
-5. Let `pi` implement against the active task files.
+5. Let `pi` implement against the active task files and keep `.ai-workflow/IMPLEMENTATION_LOG.md` current.
 6. Let `Codex` review and write `.ai-workflow/REVIEW.md`.
-7. Let `pi` fix issues and update `.ai-workflow/IMPLEMENTATION_LOG.md`.
+7. Let `pi` fix issues, revalidate, and update `.ai-workflow/IMPLEMENTATION_LOG.md`.
 
 ## Notes on Skills
 
@@ -106,6 +116,8 @@ Upstream `pi` does not automatically scan `.codex/skills/`, so the recommended c
 
 - keep project-local skills in `.codex/skills/`
 - expose them to `pi` via `.agents/skills` (junction or copy)
+
+This template now includes workflow skill copies in `.codex/skills/` so the repository can carry its own planning, implementation, and review contracts.
 
 See:
 

@@ -57,6 +57,13 @@ This is useful for AI-assisted development because it reduces repeated re-decisi
 
 This is more reliable than relying on agent memory alone.
 
+The strongest reusable version of this pattern is not just file presence, but file quality:
+
+- `GOAL.md` carries background and reason for change
+- `PLAN.md` carries scope, assumptions, and why each step exists
+- `IMPLEMENTATION_LOG.md` records decisions and real validation evidence
+- `REVIEW.md` explains why findings matter, not just what is wrong
+
 ### 5. Implementation behavior is localized
 
 `.pi/SYSTEM.md` turns `pi` into a project-specific implementation agent instead of a generic shell assistant.
@@ -70,6 +77,7 @@ This is important because:
 - the skills travel with the repo
 - the repo explains itself
 - Codex can load domain context without global clutter
+- workflow behavior can be versioned with the project instead of drifting in user-global state
 
 ### 7. Skills discovery should be bridged for pi
 

@@ -6,6 +6,10 @@ Recommended pattern:
 
 - keep the real project-local skills in `.codex/skills`
 - expose them to `pi` through `.agents/skills`
+- this includes both domain skills and the repo-local workflow skills:
+  - `workflow-plan-acceptance`
+  - `workflow-implement`
+  - `workflow-review-md`
 
 ## Windows
 

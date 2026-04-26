@@ -4,6 +4,10 @@ Put project-specific Codex skills here.
 
 Recommended usage:
 
+- keep the workflow skills in this folder if you want the repo to be self-contained:
+  - `workflow-plan-acceptance`
+  - `workflow-implement`
+  - `workflow-review-md`
 - keep domain skills in `.codex/skills/`
 - keep global generic skills in the user-level Codex skills directory
 - avoid putting project-specific domain logic into global skills
