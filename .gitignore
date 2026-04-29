@@ -8,3 +8,6 @@ scratch/
 
 # PowerShell transcript or temporary outputs
 *.log
+
+# Repository-level workflow scratch
+.ai-workflow/

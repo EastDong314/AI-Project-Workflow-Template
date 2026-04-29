@@ -2,6 +2,23 @@
 
 This repository assumes a Codex-to-pi collaboration loop.
 
+## Asset Layers
+
+This repository is intentionally split into four public layers:
+
+- `skills/`
+  - canonical workflow skill definitions
+- `pi/`
+  - public-safe pi companion config and prompt examples
+- `template/`
+  - copyable project template with project-local skill copies
+- `docs/`
+  - method notes, extracted patterns, and visual guides
+
+The root `skills/` directory is the source of truth for reusable workflow skills.
+
+The copies under `template/.codex/skills/` exist only so a generated project stays self-contained.
+
 ## Role Split
 
 Default split:
@@ -152,6 +169,10 @@ In this template repository, there are two supported ways:
 
 - use `scripts/init-project.ps1 -CreatePiSkillsBridge`
 - use `scripts/link-codex-skills.ps1` after initialization
+
+If you edit the reusable workflow skills in this repository, sync the template copies with:
+
+- `scripts/sync-template-skills.ps1`
 
 ## Minimum Files For New Repositories
 

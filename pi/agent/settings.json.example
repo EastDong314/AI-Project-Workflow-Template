@@ -1,0 +1,9 @@
+{
+  "defaultProvider": "minimax-cn-tokenplan",
+  "defaultModel": "MiniMax-M2.7",
+  "shellPath": "C:\\Path\\To\\Git\\bin\\bash.exe",
+  "npmCommand": [
+    "C:\\Path\\To\\nodejs\\npm.cmd"
+  ],
+  "enableSkillCommands": true
+}

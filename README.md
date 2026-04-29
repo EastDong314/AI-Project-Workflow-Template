@@ -1,45 +1,30 @@
 # AI Project Workflow Template
 
-Reusable project initialization template for AI-assisted development with:
+Reusable workflow kit for Codex-to-pi collaboration.
 
-- project-level architecture and collaboration rules
-- Codex-to-pi planning / implementation / review loop
-- `.ai-workflow` task artifacts
-- project-level `.pi` implementation-agent behavior
-- local `.codex/skills` convention plus `pi` discovery compatibility
-- repo-portable workflow skills for context alignment, planning, implementation, review, and diagnosis
+This repository is now the single public home for:
 
-This template was extracted from a working setup used in `SignalReactor` and generalized for reuse across new repositories.
+- the reusable project template
+- the five workflow skills
+- public-safe pi companion configuration
+- workflow reference docs and visual guides
 
-## What This Repository Contains
+The goal is simple: keep one source of truth for the workflow so planning, implementation, review, and pi setup do not drift apart.
+
+## Repository Layout
 
 - `docs/`
-  - explanation of the extracted structure and workflow method
+  - workflow method, extracted patterns, and visual guides
+- `skills/`
+  - canonical copies of the five workflow skills
+- `pi/`
+  - public-safe pi companion config, prompts, and restore helper
 - `template/`
-  - files and folders to copy into a new project
-- `scripts/init-project.ps1`
-  - bootstrap script to copy the template into a target repository
-- `scripts/link-codex-skills.ps1`
-  - helper script to bridge `.codex/skills` into `.agents/skills` for upstream `pi`
+  - files to copy into a new repository
+- `scripts/`
+  - bootstrap and sync helpers
 
-## Core Idea
-
-Split responsibilities clearly:
-
-- `Codex`
-  - planning
-  - acceptance definition
-  - review
-  - optional coding when explicitly requested
-- `pi`
-  - implementation
-  - validation
-  - fixing review findings
-  - commit execution
-
-Project state should be carried by files, not just by chat history.
-
-The workflow assumes five portable skills with a fixed summary format:
+## The Five Workflow Skills
 
 - `workflow-grill-with-docs`
 - `workflow-plan-acceptance`
@@ -47,101 +32,92 @@ The workflow assumes five portable skills with a fixed summary format:
 - `workflow-review-md`
 - `workflow-diagnose`
 
-## Template Contents
+The root `skills/` directory is the canonical public source.
 
-Inside `template/`:
+The copies under `template/.codex/skills/` exist so a new project can be bootstrapped as a self-contained repository.
+
+## Role Split
+
+- `Codex`
+  - context alignment
+  - planning
+  - acceptance shaping
+  - review
+  - optional coding only when explicitly requested
+- `pi`
+  - implementation
+  - validation
+  - diagnosis and bug fixing
+  - final cleanup and follow-through
+
+Project state should live in files, not only in chat history.
+
+## What To Use For What
+
+### `template/`
+
+Use when you want to initialize a new repository with:
 
 - `AGENTS.md`
 - `CONTEXT.md`
+- `.ai-workflow/*`
 - `.pi/SYSTEM.md`
-- `.ai-workflow/GOAL.md`
-- `.ai-workflow/PLAN.md`
-- `.ai-workflow/ACCEPTANCE.md`
-- `.ai-workflow/IMPLEMENTATION_LOG.md`
-- `.ai-workflow/REVIEW.md`
-- `.codex/skills/README.md`
-- `.codex/skills/workflow-grill-with-docs/SKILL.md`
-- `.codex/skills/workflow-plan-acceptance/SKILL.md`
-- `.codex/skills/workflow-implement/SKILL.md`
-- `.codex/skills/workflow-review-md/SKILL.md`
-- `.codex/skills/workflow-diagnose/SKILL.md`
+- project-local `.codex/skills/*`
 - `.agents/README.md`
-- `docs/README.md`
-- `docs/adr/README.md`
-- `README.md`
-- `template/docs/backend-implementation-contract.md` for backend/API repositories
+
+### `skills/`
+
+Use when you want to inspect, copy, or evolve the workflow skills themselves.
+
+### `pi/`
+
+Use when you want a public-safe example of:
+
+- `~/.pi/agent/AGENTS.md`
+- `~/.pi/agent/APPEND_SYSTEM.md`
+- prompt templates
+- example `settings.json`
+- example `models.json`
+
+The `pi/` folder intentionally avoids machine-specific private values.
 
 ## Recommended Usage
 
-### Option 1: Copy manually
-
-Copy the contents of `template/` into a new repository and replace `{{PROJECT_NAME}}` placeholders.
-
-### Option 2: Use the bootstrap script
-
-```powershell
-pwsh ./scripts/init-project.ps1 -TargetPath "C:\Workspace\MyProject" -ProjectName "MyProject"
-```
-
-Or in Windows PowerShell:
+### Initialize a new repository
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\init-project.ps1 -TargetPath "C:\Workspace\MyProject" -ProjectName "MyProject"
 ```
 
-If you also want upstream `pi` to discover the same project-local skills kept in `.codex/skills`, enable the bridge during bootstrap:
+If upstream `pi` should see the same project-local skills:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\init-project.ps1 -TargetPath "C:\Workspace\MyProject" -ProjectName "MyProject" -CreatePiSkillsBridge
 ```
 
-For an existing project, run:
+For an existing repository:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\link-codex-skills.ps1 -ProjectPath "C:\Workspace\MyProject"
 ```
 
-## Recommended Lifecycle
-
-1. Create repository and copy the template in.
-2. Fill `AGENTS.md` with project-specific architecture and guardrails.
-3. Fill `CONTEXT.md` with stable project language, boundaries, patterns, and active smells.
-4. Add or refine project-local skills in `.codex/skills/`.
-5. For ambiguous, high-risk, or backend-heavy tasks, run `workflow-grill-with-docs` before planning.
-6. Start each task by generating:
-   - `.ai-workflow/GOAL.md`
-   - `.ai-workflow/PLAN.md`
-   - `.ai-workflow/ACCEPTANCE.md`
-7. Let `pi` implement against the active task files and keep `.ai-workflow/IMPLEMENTATION_LOG.md` current.
-8. Let `Codex` review and write `.ai-workflow/REVIEW.md`.
-9. Let `pi` fix issues, revalidate, and update `.ai-workflow/IMPLEMENTATION_LOG.md`.
-
-## Notes on Skills
-
-`Codex` can use project-local skills from `.codex/skills/`.
-
-Upstream `pi` does not automatically scan `.codex/skills/`, so the recommended compatibility pattern is:
-
-- keep project-local skills in `.codex/skills/`
-- expose them to `pi` via `.agents/skills` (junction or copy)
-
-This template now includes workflow skill copies in `.codex/skills/` so the repository can carry its own planning, implementation, and review contracts.
-
-Recommended new-feature flow:
+## Recommended New Feature Flow
 
 1. Read `AGENTS.md`, `CONTEXT.md`, and the relevant docs/ADRs.
-2. Use `workflow-grill-with-docs` when terminology, boundaries, or architecture fit need alignment.
-3. Use `workflow-plan-acceptance` to create the active task files.
-4. Use `workflow-implement` for approved implementation work.
+2. Use `workflow-grill-with-docs` when terminology, scope, or architecture fit is unclear.
+3. Use `workflow-plan-acceptance` to create `GOAL.md`, `PLAN.md`, and `ACCEPTANCE.md`.
+4. Use `workflow-implement` to execute the approved plan.
 5. Use `workflow-review-md` for the review gate.
-6. Use `workflow-diagnose` for bug or regression investigation before large fixes.
+6. Use `workflow-diagnose` first for bug, regression, or flaky investigation.
 
-See:
+## Visual Guides
 
-- `docs/workflow-method.md`
-- `template/.agents/README.md`
+- new feature flow: [docs/workflow-guide.png](C:/Workspace/AI-Project-Workflow-Template/docs/workflow-guide.png)
+- bug fix flow: [docs/workflow-bug-guide.png](C:/Workspace/AI-Project-Workflow-Template/docs/workflow-bug-guide.png)
 
 ## See Also
 
-- `docs/signal-reactor-patterns.md`
-- `docs/workflow-method.md`
+- [docs/workflow-method.md](C:/Workspace/AI-Project-Workflow-Template/docs/workflow-method.md)
+- [docs/signal-reactor-patterns.md](C:/Workspace/AI-Project-Workflow-Template/docs/signal-reactor-patterns.md)
+- [skills/README.md](C:/Workspace/AI-Project-Workflow-Template/skills/README.md)
+- [pi/README.md](C:/Workspace/AI-Project-Workflow-Template/pi/README.md)
