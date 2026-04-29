@@ -48,6 +48,7 @@ When preparing a new review artifact for the current task, prefer replacing stal
    - risky omissions
    - unnecessary abstraction or overengineering
    - deployment or operational risk introduced by the change
+   - backend layer violations when backend code is touched
 4. Prefer specific, actionable findings over generic style advice.
 5. Explain why each blocking finding matters so the implementation model does not need to infer reviewer intent.
 
@@ -104,6 +105,14 @@ Always return output in this shape unless the user explicitly asks for a differe
 - Avoid rewriting the implementation plan unless the existing implementation clearly invalidates it.
 - Do not dilute blocking issues with broad "nice to have" commentary.
 - Include enough background and rationale that a weaker implementation model can execute fixes correctly without reconstructing context from scratch.
+- For backend reviews, call out concrete smells such as:
+  - controller-owned business logic
+  - repository-owned business decisions
+  - HTTP concerns inside services
+  - persistence, entity, or SDK leakage across boundaries
+  - missing centralized middleware/filter handling
+  - weak traceability, audit, or exception taxonomy
+  - oversized mixed-responsibility files or directories that should be split
 
 ## Severity guidance
 
@@ -115,6 +124,7 @@ Always return output in this shape unless the user explicitly asks for a differe
   - dangerous edge cases that should be fixed now
   - scope drift that makes the change harder to maintain or deploy
   - speculative abstractions that add complexity without current-task justification
+  - backend boundary breaks that will accelerate architectural decay
 - Treat as non-blocking:
   - cleanup ideas
   - maintainability improvements that do not affect correctness today
@@ -130,6 +140,7 @@ Evaluate whether the implementation is:
 - extensible only where the current scope actually demands it
 - covered by targeted regression tests
 - safe to run, start, and deploy within the affected workflow
+- aligned with explicit backend contracts when API/service/repository/persistence code is involved
 
 ## Final response format
 

@@ -20,6 +20,7 @@ Examples:
 - event-driven integration boundaries
 - traceable results
 - documentation must move with structural change
+- backend layers should remain explicit when the project contains API/service/repository/persistence code
 
 ## Code And Documentation Constraints
 
@@ -38,6 +39,7 @@ Recommended defaults:
 - extensibility should be added only when justified by the current task
 - changed behavior should be covered by targeted tests and regression checks
 - local run, build, and deploy assumptions must remain documented and reproducible
+- for backend code, preserve thin controllers, service-centric orchestration, repository-only data access, infrastructure isolation, and DTO/domain/entity separation
 
 ## Review Gate
 

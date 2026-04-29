@@ -22,6 +22,7 @@ Generate implementation-ready planning artifacts for the Codex to pi workflow.
    - risks and stop conditions
 4. Keep acceptance criteria testable and reviewable.
 5. Optimize for engineering quality that is simple, robust, maintainable, extensible within real scope, well-tested, and easy to deploy. Do not encourage speculative abstractions or architecture astronautics.
+6. If the task touches backend code, make layer ownership and backend architecture constraints explicit instead of assuming the implementation model will infer them.
 
 ## Workflow file mode
 
@@ -143,6 +144,12 @@ Always return output in this shape unless the user explicitly asks for a differe
   - the minimum viable plan under those assumptions
 - Avoid vague items such as "improve code quality" without stating how that will be verified.
 - For bug fixes, include how the defect will be reproduced or otherwise evidenced before and after the fix whenever feasible.
+- For backend work, explicitly state:
+  - the layer path, such as `controller -> application/service -> repository -> persistence/adapter`
+  - which layer owns each behavior
+  - whether DTO/domain/entity separation is involved
+  - which cross-cutting concerns must stay centralized, such as middleware, filters, exception handling, metrics, validation, and mapping
+  - whether repositories, orchestrators, adapters, background jobs, or streaming components must stay isolated by responsibility
 
 ## Scope rules
 
@@ -150,6 +157,7 @@ Always return output in this shape unless the user explicitly asks for a differe
 - If the task touches multiple systems, split the plan by subsystem only when that improves execution clarity.
 - If the user is asking for a large refactor, still propose an incremental first slice when possible.
 - Do not plan speculative extension points, extra abstractions, or future-facing infrastructure unless the current task actually needs them.
+- Do not authorize backend shortcuts that blur layers, such as controllers calling persistence directly or services emitting HTTP-native error payloads.
 
 ## Acceptance rules
 
@@ -158,6 +166,13 @@ Always return output in this shape unless the user explicitly asks for a differe
 - Verification should name concrete commands or inspection steps whenever they are knowable.
 - Do not invent fake test results or claim validation was run.
 - Prefer acceptance criteria that make review objective instead of taste-based.
+- For backend work, acceptance should cover relevant items such as:
+  - thin controllers and service-centric orchestration
+  - repository-only data access
+  - explicit business exceptions
+  - DTO/domain/entity boundary preservation
+  - traceability, audit, and cross-cutting behavior where the use case requires them
+  - targeted tests for routes, orchestration, repository behavior, and exception translation as appropriate
 
 ## Final response format
 

@@ -24,6 +24,18 @@ Treat `.ai-workflow` as current-task overwrite mode. These files describe the ac
 - Implement the approved plan unless it is clearly blocked.
 - Before editing, make sure you can restate the task background, the reason the change exists, the active scope, the non-goals, and the acceptance target.
 - Do not optimize for the smallest possible diff. Inside the approved scope, prefer sound design, robustness, maintainability, and reasonable extensibility.
+- If the task touches backend code, preserve explicit layer ownership:
+  - controllers are thin transport adapters
+  - application services orchestrate use cases
+  - repositories handle data access only
+  - infrastructure owns persistence, external I/O, background jobs, and streaming
+  - core/domain contracts stay free of infrastructure dependencies
+- For backend work, do not:
+  - put business workflows, broad `try/catch`, `DbContext`, or repository logic in controllers
+  - put HTTP-specific response shaping, `ProblemDetails`, or `HttpContext` logic into services
+  - leak entities, tracked persistence models, or SDK types across boundaries
+  - collapse multiple concerns into one large file when the architecture already suggests a cleaner split
+- For backend work, preserve DTO/domain/entity separation, explicit business exceptions, centralized middleware/filter handling, and traceability dimensions for requestId, traceId, actor, account, exchange, symbol, and outcome where relevant.
 - Prefer simple, direct solutions over speculative abstractions. Do not add extension points, indirection layers, or configuration surfaces unless the current task or repository patterns clearly require them.
 - Fix blocking findings from `.ai-workflow/REVIEW.md` before considering the task complete.
 - Avoid unrelated edits, but do not avoid necessary in-scope refactoring when it materially improves code quality.
@@ -48,6 +60,7 @@ Before editing, briefly summarize in Chinese using exactly these top-level secti
 - 修改背景: ...
 - 修改原因: ...
 - 本轮范围: ...
+- 后端分层路径: ...（如适用）
 - Review 阻塞项: ...
 - 首个动作: ...
 

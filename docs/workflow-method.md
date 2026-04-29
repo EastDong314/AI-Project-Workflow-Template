@@ -28,6 +28,7 @@ The active task lives in `.ai-workflow/`.
 
 Default mode is **current-task overwrite mode**:
 
+- `CONTEXT.md` is the durable, long-lived shared language and architecture-memory layer
 - `GOAL.md`
 - `PLAN.md`
 - `ACCEPTANCE.md`
@@ -55,6 +56,14 @@ Planning must capture:
 - scope and non-goals
 - assumptions
 - execution steps with reasons and verification expectations
+- backend layer ownership and boundaries when backend code is affected
+
+Before planning, use `workflow-grill-with-docs` when the task is:
+
+- ambiguous
+- backend-heavy
+- terminology-sensitive
+- likely to conflict with current architecture
 
 ### 2. Implementation
 
@@ -71,6 +80,7 @@ Implementation should:
 - stay within the approved scope unless a blocker is documented
 - record key design decisions and why they were made
 - record actual validation evidence, not claims
+- preserve backend layer contracts and centralized cross-cutting concerns when backend code is involved
 
 ### 3. Review
 
@@ -92,6 +102,7 @@ Review must include:
 - blocking findings with why they matter
 - missing validation or acceptance gaps
 - attention to overengineering, scope drift, and deployability risk
+- backend boundary violations and code smells when controllers/services/repositories/persistence are touched
 
 ### 4. Fix cycle
 
@@ -121,9 +132,13 @@ Keep project skills in:
 
 Recommended workflow skills:
 
+- `workflow-grill-with-docs`
 - `workflow-plan-acceptance`
 - `workflow-implement`
 - `workflow-review-md`
+- `workflow-diagnose`
+
+If the repository contains backend/API code, also add a durable backend implementation contract under `docs/` and treat it as an execution constraint for planning, implementation, and review.
 
 ### pi compatibility
 
@@ -144,9 +159,22 @@ At minimum, every new repository should have:
 
 - `README.md`
 - `AGENTS.md`
+- `CONTEXT.md`
 - `.pi/SYSTEM.md`
 - `.ai-workflow/GOAL.md`
 - `.ai-workflow/PLAN.md`
 - `.ai-workflow/ACCEPTANCE.md`
 - `.ai-workflow/IMPLEMENTATION_LOG.md`
 - `.ai-workflow/REVIEW.md`
+
+## New Feature Flow
+
+Recommended default flow for a new feature:
+
+1. Read `AGENTS.md`, `CONTEXT.md`, and relevant docs/ADRs.
+2. Run `workflow-grill-with-docs` if terminology, scope, or architecture fit is unclear.
+3. Run `workflow-plan-acceptance` to create `GOAL.md`, `PLAN.md`, and `ACCEPTANCE.md`.
+4. Run `workflow-implement` to execute the approved plan and update `IMPLEMENTATION_LOG.md`.
+5. Run `workflow-review-md` to review the real diff, validation evidence, and acceptance coverage.
+6. If review blocks the task, run another implementation pass.
+7. Commit only after review passes and acceptance is satisfied.

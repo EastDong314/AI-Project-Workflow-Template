@@ -7,7 +7,7 @@ Reusable project initialization template for AI-assisted development with:
 - `.ai-workflow` task artifacts
 - project-level `.pi` implementation-agent behavior
 - local `.codex/skills` convention plus `pi` discovery compatibility
-- repo-portable workflow skills for `plan`, `implement`, and `review`
+- repo-portable workflow skills for context alignment, planning, implementation, review, and diagnosis
 
 This template was extracted from a working setup used in `SignalReactor` and generalized for reuse across new repositories.
 
@@ -39,17 +39,20 @@ Split responsibilities clearly:
 
 Project state should be carried by files, not just by chat history.
 
-The workflow also assumes three portable skills with a fixed summary format:
+The workflow assumes five portable skills with a fixed summary format:
 
+- `workflow-grill-with-docs`
 - `workflow-plan-acceptance`
 - `workflow-implement`
 - `workflow-review-md`
+- `workflow-diagnose`
 
 ## Template Contents
 
 Inside `template/`:
 
 - `AGENTS.md`
+- `CONTEXT.md`
 - `.pi/SYSTEM.md`
 - `.ai-workflow/GOAL.md`
 - `.ai-workflow/PLAN.md`
@@ -57,13 +60,16 @@ Inside `template/`:
 - `.ai-workflow/IMPLEMENTATION_LOG.md`
 - `.ai-workflow/REVIEW.md`
 - `.codex/skills/README.md`
+- `.codex/skills/workflow-grill-with-docs/SKILL.md`
 - `.codex/skills/workflow-plan-acceptance/SKILL.md`
 - `.codex/skills/workflow-implement/SKILL.md`
 - `.codex/skills/workflow-review-md/SKILL.md`
+- `.codex/skills/workflow-diagnose/SKILL.md`
 - `.agents/README.md`
 - `docs/README.md`
 - `docs/adr/README.md`
 - `README.md`
+- `template/docs/backend-implementation-contract.md` for backend/API repositories
 
 ## Recommended Usage
 
@@ -99,14 +105,16 @@ powershell -ExecutionPolicy Bypass -File .\scripts\link-codex-skills.ps1 -Projec
 
 1. Create repository and copy the template in.
 2. Fill `AGENTS.md` with project-specific architecture and guardrails.
-3. Add or refine project-local skills in `.codex/skills/`.
-4. Start each task by generating:
+3. Fill `CONTEXT.md` with stable project language, boundaries, patterns, and active smells.
+4. Add or refine project-local skills in `.codex/skills/`.
+5. For ambiguous, high-risk, or backend-heavy tasks, run `workflow-grill-with-docs` before planning.
+6. Start each task by generating:
    - `.ai-workflow/GOAL.md`
    - `.ai-workflow/PLAN.md`
    - `.ai-workflow/ACCEPTANCE.md`
-5. Let `pi` implement against the active task files and keep `.ai-workflow/IMPLEMENTATION_LOG.md` current.
-6. Let `Codex` review and write `.ai-workflow/REVIEW.md`.
-7. Let `pi` fix issues, revalidate, and update `.ai-workflow/IMPLEMENTATION_LOG.md`.
+7. Let `pi` implement against the active task files and keep `.ai-workflow/IMPLEMENTATION_LOG.md` current.
+8. Let `Codex` review and write `.ai-workflow/REVIEW.md`.
+9. Let `pi` fix issues, revalidate, and update `.ai-workflow/IMPLEMENTATION_LOG.md`.
 
 ## Notes on Skills
 
@@ -118,6 +126,15 @@ Upstream `pi` does not automatically scan `.codex/skills/`, so the recommended c
 - expose them to `pi` via `.agents/skills` (junction or copy)
 
 This template now includes workflow skill copies in `.codex/skills/` so the repository can carry its own planning, implementation, and review contracts.
+
+Recommended new-feature flow:
+
+1. Read `AGENTS.md`, `CONTEXT.md`, and the relevant docs/ADRs.
+2. Use `workflow-grill-with-docs` when terminology, boundaries, or architecture fit need alignment.
+3. Use `workflow-plan-acceptance` to create the active task files.
+4. Use `workflow-implement` for approved implementation work.
+5. Use `workflow-review-md` for the review gate.
+6. Use `workflow-diagnose` for bug or regression investigation before large fixes.
 
 See:
 

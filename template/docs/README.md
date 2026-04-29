@@ -5,8 +5,10 @@ Use `docs/` for durable project documentation that should survive chat history r
 Recommended initial docs:
 
 - architecture overview
+- project context and shared language
 - domain model
 - integration contracts
+- backend implementation contract if the repository contains backend/API code
 - local development bootstrap
 - testing strategy
 - naming conventions
