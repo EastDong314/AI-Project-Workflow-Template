@@ -1,8 +1,8 @@
-# Workflow Skills
+# Reusable Skills
 
-These are the canonical public copies of the workflow skills used by this repository.
+These are the canonical public copies of reusable skills used by this repository.
 
-They are designed to support a Codex-to-pi collaboration loop with:
+They include workflow skills for a Codex-to-pi collaboration loop:
 
 - context alignment
 - executable planning
@@ -17,12 +17,13 @@ They are designed to support a Codex-to-pi collaboration loop with:
 - `workflow-implement`
 - `workflow-review-md`
 - `workflow-diagnose`
+- `ruoyi-vue-pro-dev`
 
 ## Source Of Truth
 
 - edit the skill definitions here first
 - keep `template/.codex/skills/` in sync from this folder
-- use `scripts/sync-template-skills.ps1` after changing workflow skills
+- use `scripts/sync-template-skills.ps1` after changing reusable skills
 
 ## Publishing Rule
 

@@ -11,7 +11,8 @@ $skillNames = @(
     "workflow-plan-acceptance",
     "workflow-implement",
     "workflow-review-md",
-    "workflow-diagnose"
+    "workflow-diagnose",
+    "ruoyi-vue-pro-dev"
 )
 
 if (-not (Test-Path $sourceRoot)) {
@@ -38,4 +39,4 @@ foreach ($skillName in $skillNames) {
     Write-Host "Synced $skillName"
 }
 
-Write-Host "Template workflow skills are now synced from root skills/."
+Write-Host "Template reusable skills are now synced from root skills/."
