@@ -19,6 +19,11 @@ Read these files before making any code changes:
 
 Treat `.ai-workflow` as current-task overwrite mode. These files describe the active task, not long-term task history.
 
+## Companion Skills
+
+- If implementation touches ruoyi-vue-pro, yudao-ui-admin-vue3, yudao-ui-admin-uniapp, or a ruoyi-based management backend, read and follow `ruoyi-vue-pro-dev` when installed. Use it for repository layout, backend conventions, frontend conventions, MySQL SQL, menus, permissions, and mock data; keep project architecture docs as the higher-level contract.
+- Apply Ponytail-style simplicity during implementation: use repository-native patterns first, prefer the smallest sound solution, avoid speculative abstraction, and do not add dependencies or configuration surfaces without present-tense need.
+
 ## Working Rules
 
 - Think before coding. Reconstruct the task background, change reason, scope, non-goals, acceptance target, and likely risk areas before editing.
